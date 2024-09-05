@@ -132,7 +132,7 @@ class Checkbox {
     initMainCheckbox() {
         const mainCheckbox = this.getMainCheckbox();
 
-        mainCheckbox.onchange = ev => {
+        mainCheckbox.onchange = () => {
             if (mainCheckbox.checked) {
                 this.checkAll();
             } else {
@@ -149,7 +149,7 @@ class Checkbox {
         const mainCheckbox = self.getMainCheckbox();
         const subCheckboxes = self.getSubCheckboxes();
 
-        subCheckboxes.forEach(function (e) {
+        subCheckboxes.forEach(e => {
             e.onchange = () => {
                 mainCheckbox.checked = self.isAllChecked();
             };
@@ -164,7 +164,7 @@ class Checkbox {
         const subCheckboxes = this.getSubCheckboxes();
 
         mainCheckbox.checked = true;
-        subCheckboxes.forEach(function (e){
+        subCheckboxes.forEach(e => {
             e.checked = true;
         });
     }
@@ -178,7 +178,7 @@ class Checkbox {
         const subCheckboxes = self.getSubCheckboxes(); // 모든 체크박스
 
         mainCheckbox.checked = false;
-        subCheckboxes.forEach(function (e){
+        subCheckboxes.forEach(e => {
             e.checked = false;
         });
     }
@@ -192,7 +192,7 @@ class Checkbox {
         const subCheckboxes = self.getSubCheckboxes(); // 모든 체크박스
 
         mainCheckbox.disabled = true;
-        subCheckboxes.forEach(function (e){
+        subCheckboxes.forEach(e => {
             e.disabled = true;
         });
     }
@@ -206,7 +206,7 @@ class Checkbox {
         const subCheckboxes = self.getSubCheckboxes(); // 모든 체크박스
 
         mainCheckbox.disabled = false;
-        subCheckboxes.forEach(function (e){
+        subCheckboxes.forEach(e => {
             e.disabled = false;
         });
     }
