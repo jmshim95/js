@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script src="./xlsx-populate.min.js"></script>
+  <script src="./ExcelGenerator.js"></script>
+</head>
+<body>
+<button id="download">엑셀 다운로드</button>
+
+<script>
+    const config = {
+        headerMap: [], // 공백으로 해두면 data의 첫번 째 객체 키값기준으로 헤더 생성
+        fileName: "test",
+    }
+
+    let excelGenerator = new ExcelGenerator(config);
+
+    window.download.onclick = () => {
+      excelGenerator.downloadExcel([
+          {
+              이름: '김똘똘',
+              나이: '31',
+              성별: 'M'
+          },
+          {
+              이름: '김칠칠',
+              나이: '32',
+          },
+          {
+              이름: '김철수',
+              나이: '33',
+          },
+          {
+              이름: '김박박',
+              나이: '34',
+          },
+      ]);
+    }
+</script>
+</body>
+</html>
