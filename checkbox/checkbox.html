@@ -11,11 +11,11 @@
 <body>
 <div>
   <label><input type="checkbox" id="chkAll">All</label>
-  <label><input type="checkbox" name="chk" data-seq="1">sub1</label>
-  <label><input type="checkbox" name="chk" data-seq="2">sub2</label>
-  <label><input type="checkbox" name="chk" data-seq="3">sub3</label>
-  <label><input type="checkbox" name="chk" data-seq="4">sub4</label>
-  <label><input type="checkbox" name="chk" data-seq="5">sub5</label>
+  <label><input type="checkbox" name="chk" data-seq="1" value="1" required>sub1</label>
+  <label><input type="checkbox" name="chk" data-seq="2" value="2" required>sub2</label>
+  <label><input type="checkbox" name="chk" data-seq="3" value="3">sub3</label>
+  <label><input type="checkbox" name="chk" data-seq="4" value="4">sub4</label>
+  <label><input type="checkbox" name="chk" data-seq="5" value="5">sub5</label>
   <br/>
   <br/>
   <br/>
@@ -60,7 +60,7 @@
 </div>
 <hr/>
 <script>
-    const checkbox = new Checkbox({chkId: "chkAll", chkName: "chk", isRequired: false});
+    const checkbox = new Checkbox({chkId: "chkAll", chkName: "chk", isRequired: true});
 </script>
 </body>
 </html>
