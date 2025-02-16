@@ -3,6 +3,10 @@ class Checkbox {
     #chkName;
     #isRequired = true;
     #isVisible = true;
+    #checkAllCallback = () => {
+    };
+    #uncheckAllCallback = () => {
+    };
 
     /**
      *
@@ -10,14 +14,18 @@ class Checkbox {
      * @param {string} chkName 개별 체크박스 name 값
      * @param {boolean} isRequired 필수 체크박스만 선택할것인지
      * @param {boolean} isVisible 노출되고 있는 체크박스만 선택할것인지
+     * @param {function} checkAllCallback 전체선택 콜백
+     * @param {function} uncheckAllCallback 전체선택해제 콜백
      */
-    constructor({chkId = "chkAll", chkName= "chk", isRequired = this.isRequired, isVisible = this.isVisible} = {}) {
+    constructor({chkId = "chkAll", chkName= "chk", isRequired = this.isRequired, isVisible = this.isVisible, checkAllCallback = () => {}, uncheckAllCallback = () => {}, } = {}) {
         this.#chkId = chkId;
         this.#chkName = chkName;
         this.#isRequired = isRequired;
         this.#isVisible = isVisible;
+        this.#checkAllCallback = checkAllCallback;
+        this.#uncheckAllCallback = uncheckAllCallback;
 
-        this.#initCheckboxEvent();
+        this.initCheckboxEvent();
     }
 
     get chkId() {
@@ -26,7 +34,7 @@ class Checkbox {
 
     set chkId(value) {
         this.#chkId = value;
-        this.#initCheckboxEvent();
+        this.initCheckboxEvent();
     }
 
     get chkName() {
@@ -35,7 +43,7 @@ class Checkbox {
 
     set chkName(value) {
         this.#chkName = value;
-        this.#initCheckboxEvent();
+        this.initCheckboxEvent();
     }
 
     get isRequired() {
@@ -48,7 +56,7 @@ class Checkbox {
      */
     set isRequired(value) {
         this.#isRequired = value === true;
-        this.#initCheckboxEvent();
+        this.initCheckboxEvent();
     }
 
 
@@ -61,10 +69,10 @@ class Checkbox {
      */
     set isVisible(value) {
         this.#isVisible = value === true;
-        this.#initCheckboxEvent();
+        this.initCheckboxEvent();
     }
 
-    #initCheckboxEvent() {
+    initCheckboxEvent() {
         this.#initMainCheckbox();
         this.#initSubCheckboxes();
     }
@@ -118,7 +126,13 @@ class Checkbox {
 
         subCheckboxes.forEach(e => {
             e.onchange = () => {
-                mainCheckbox.checked = this.isAllChecked();
+                if (this.isAllChecked()) {
+                    mainCheckbox.checked = true
+                    this.#checkAllCallback();
+                } else {
+                    mainCheckbox.checked = false;
+                    this.#uncheckAllCallback();
+                }
             };
         });
     }
