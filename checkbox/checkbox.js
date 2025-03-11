@@ -1,8 +1,8 @@
 class Checkbox {
     #chkId;
     #chkName;
-    #isRequired = true;
-    #isVisible = true;
+    #requiredOnly = true;
+    #visibleOnly = true;
     #checkAllCallback = () => {
     };
     #uncheckAllCallback = () => {
@@ -12,16 +12,16 @@ class Checkbox {
      *
      * @param {string} chkId 전체동의 체크박스 id 값
      * @param {string} chkName 개별 체크박스 name 값
-     * @param {boolean} isRequired 필수 체크박스만 선택할것인지
-     * @param {boolean} isVisible 노출되고 있는 체크박스만 선택할것인지
+     * @param {boolean} requiredOnly 필수 체크박스만 선택할것인지
+     * @param {boolean} visibleOnly 노출되고 있는 체크박스만 선택할것인지
      * @param {function} checkAllCallback 전체선택 콜백
      * @param {function} uncheckAllCallback 전체선택해제 콜백
      */
-    constructor({chkId = "chkAll", chkName= "chk", isRequired = this.isRequired, isVisible = this.isVisible, checkAllCallback = () => {}, uncheckAllCallback = () => {}, } = {}) {
+    constructor({chkId = "chkAll", chkName= "chk", requiredOnly = this.requiredOnly, visibleOnly = this.visibleOnly, checkAllCallback = () => {}, uncheckAllCallback = () => {}, } = {}) {
         this.#chkId = chkId;
         this.#chkName = chkName;
-        this.#isRequired = isRequired;
-        this.#isVisible = isVisible;
+        this.#requiredOnly = requiredOnly;
+        this.#visibleOnly = visibleOnly;
         this.#checkAllCallback = checkAllCallback;
         this.#uncheckAllCallback = uncheckAllCallback;
 
@@ -46,29 +46,29 @@ class Checkbox {
         this.initCheckboxEvent();
     }
 
-    get isRequired() {
-        return this.#isRequired;
+    get requiredOnly() {
+        return this.#requiredOnly;
     }
 
 
     /**
      * @param {boolean} value
      */
-    set isRequired(value) {
-        this.#isRequired = value === true;
+    set requiredOnly(value) {
+        this.#requiredOnly = value === true;
         this.initCheckboxEvent();
     }
 
 
-    get isVisible() {
-        return this.#isVisible;
+    get visibleOnly() {
+        return this.#visibleOnly;
     }
 
     /**
      * @param {boolean} value
      */
-    set isVisible(value) {
-        this.#isVisible = value === true;
+    set visibleOnly(value) {
+        this.#visibleOnly = value === true;
         this.initCheckboxEvent();
     }
 
@@ -82,18 +82,18 @@ class Checkbox {
     }
 
     /**
-     * @param isChecked 체크된 체크박스 선택
-     * @param isRequired 필수 체크박스 선택
-     * @param isVisible 화면상 보이는 체크박스 선택
+     * @param checkedOnly 체크된 체크박스 선택
+     * @param requiredOnly 필수 체크박스 선택
+     * @param visibleOnly 화면상 보이는 체크박스 선택
      */
-    getSubCheckboxes({isChecked = false, isRequired = this.isRequired, isVisible = this.isVisible} = {}) {
+    getSubCheckboxes({checkedOnly = false, requiredOnly = this.requiredOnly, visibleOnly = this.visibleOnly} = {}) {
         let selector = `input[name='${this.chkName}']`;
-        if (isRequired) selector += `:required`;
-        if (isChecked) selector += `:checked`;
+        if (requiredOnly) selector += `:required`;
+        if (checkedOnly) selector += `:checked`;
 
         let checkboxes = Array.from(document.querySelectorAll(selector));
 
-        return isVisible ? checkboxes.filter(e => e.checkVisibility()) : checkboxes;
+        return visibleOnly ? checkboxes.filter(e => e.checkVisibility()) : checkboxes;
     }
 
     // 모두 체크되었는지
@@ -184,6 +184,6 @@ class Checkbox {
      * 체크된 항목들의 값 배열화
      */
     getValues() {
-        return this.getSubCheckboxes({ isChecked: true }).map(cb => cb.value);
+        return this.getSubCheckboxes({ checkedOnly: true }).map(cb => cb.value);
     }
 }
